@@ -24,6 +24,11 @@ class TimeScaleTheme extends Equatable {
       length: 48,
       color: Colors.red,
     ),
+    this.drawHourMarks = false,
+    this.hourMarkTheme = const TimeMarkTheme(
+      length: 0,
+      drawOnEventArea: true,
+    ),
     this.drawHalfHourMarks = true,
     this.halfHourMarkTheme = const TimeMarkTheme(length: 16),
     this.drawQuarterHourMarks = true,
@@ -44,6 +49,12 @@ class TimeScaleTheme extends Equatable {
 
   /// Current time mark customization parameters
   final TimeMarkTheme currentTimeMarkTheme;
+
+  /// Whether a hour mark is need to be shown or not
+  final bool drawHourMarks;
+
+  /// An hour mark customization theme
+  final TimeMarkTheme hourMarkTheme;
 
   /// Whether a half of an hour mark is need to show
   final bool drawHalfHourMarks;
@@ -86,6 +97,8 @@ class TimeScaleTheme extends Equatable {
     double? width,
     double? hourExtent,
     TimeMarkTheme? currentTimeMarkTheme,
+    bool? drawHourMarks,
+    TimeMarkTheme? hourMarkTheme,
     bool? drawHalfHourMarks,
     TimeMarkTheme? halfHourMarkTheme,
     bool? drawQuarterHourMarks,
@@ -98,6 +111,8 @@ class TimeScaleTheme extends Equatable {
       width: width ?? this.width,
       hourExtent: hourExtent ?? this.hourExtent,
       currentTimeMarkTheme: currentTimeMarkTheme ?? this.currentTimeMarkTheme,
+      drawHourMarks: drawHourMarks ?? this.drawHourMarks,
+      hourMarkTheme: hourMarkTheme ?? this.hourMarkTheme,
       drawHalfHourMarks: drawHalfHourMarks ?? this.drawHalfHourMarks,
       halfHourMarkTheme: halfHourMarkTheme ?? this.halfHourMarkTheme,
       drawQuarterHourMarks: drawQuarterHourMarks ?? this.drawQuarterHourMarks,

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_customizable_calendar/src/ui/themes/themes.dart';
 import 'package:flutter_customizable_calendar/src/utils/utils.dart';
+import 'package:flutter_customizable_calendar/src/ui/custom_widgets/current_time_mark_painter.dart';
 
 /// It displays a time scale of a day view (with hours and minutes marks).
 class TimeScale extends StatefulWidget {
@@ -48,7 +49,7 @@ class _TimeScaleState extends State<TimeScale> {
         theme: widget.theme,
       );
 
-  CustomPainter get _currentTimeMark => _CurrentTimeMarkPainter(
+  CustomPainter get _currentTimeMark => CurrentTimeMarkPainter(
         currentTime: _clock,
         theme: widget.theme.currentTimeMarkTheme,
       );
@@ -150,34 +151,4 @@ class _ScalePainter extends CustomPainter {
         return canvasWidth - lineLength;
     }
   }
-}
-
-class _CurrentTimeMarkPainter extends CustomPainter {
-  const _CurrentTimeMarkPainter({
-    required this.currentTime,
-    required this.theme,
-  }) : super(repaint: currentTime);
-
-  final ValueListenable<DateTime> currentTime;
-
-  final TimeMarkTheme theme;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final secondExtent = size.height / Duration.secondsPerDay;
-    final dayDate = DateUtils.dateOnly(currentTime.value);
-    final timeDiff = currentTime.value.difference(dayDate);
-    final currentTimeOffset = timeDiff.inSeconds * secondExtent;
-    final dy = currentTimeOffset - theme.strokeWidth / 2;
-
-    canvas.drawLine(
-      Offset(0, dy),
-      Offset(theme.length, dy),
-      theme.painter,
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant _CurrentTimeMarkPainter oldDelegate) =>
-      theme != oldDelegate.theme || currentTime != oldDelegate.currentTime;
 }

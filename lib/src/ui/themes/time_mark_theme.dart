@@ -8,9 +8,10 @@ class TimeMarkTheme extends Equatable {
     this.color = Colors.grey,
     this.strokeWidth = 2,
     this.strokeCap = StrokeCap.square,
+    this.drawOnEventArea = false
   });
 
-  /// Length of the line
+  /// Length of the line on the time scale
   final double length;
 
   /// Color of the line
@@ -21,6 +22,9 @@ class TimeMarkTheme extends Equatable {
 
   /// The kind of finish to place on the end of line
   final StrokeCap strokeCap;
+
+  /// Enable the mark on the event area
+  final bool drawOnEventArea;
 
   /// A painter which contains the given parameters
   Paint get painter => Paint()
@@ -43,12 +47,14 @@ class TimeMarkTheme extends Equatable {
     Color? color,
     double? strokeWidth,
     StrokeCap? strokeCap,
+    bool? drawOnEventArea,
   }) {
     return TimeMarkTheme(
       length: length ?? this.length,
       color: color ?? this.color,
       strokeWidth: strokeWidth ?? this.strokeWidth,
       strokeCap: strokeCap ?? this.strokeCap,
+      drawOnEventArea: drawOnEventArea ?? this.drawOnEventArea,
     );
   }
 }

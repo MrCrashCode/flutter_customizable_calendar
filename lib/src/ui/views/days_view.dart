@@ -9,6 +9,7 @@ import 'package:flutter_customizable_calendar/src/domain/models/models.dart';
 import 'package:flutter_customizable_calendar/src/ui/controllers/controllers.dart';
 import 'package:flutter_customizable_calendar/src/ui/custom_widgets/all_days_events_list.dart';
 import 'package:flutter_customizable_calendar/src/ui/custom_widgets/custom_widgets.dart';
+import 'package:flutter_customizable_calendar/src/ui/custom_widgets/event_area_hour_line_painter.dart';
 import 'package:flutter_customizable_calendar/src/ui/themes/themes.dart';
 import 'package:flutter_customizable_calendar/src/utils/utils.dart';
 
@@ -627,22 +628,29 @@ class _DaysViewState<T extends FloatingCalendarEvent> extends State<DaysView<T>>
                     theme: theme.timeScaleTheme,
                   ),
                   Expanded(
-                    child: ColoredBox(
-                      color: Colors.transparent, // Needs for hitTesting
-                      child: EventsLayout<T>(
-                        dayDate: dayDate,
-                        viewType: CalendarView.days,
-                        overlayKey: _overlayKey,
-                        layoutsKeys: DaysViewKeys.layouts,
-                        eventsKeys: DaysViewKeys.events,
-                        timelineTheme: widget.timelineTheme,
-                        breaks: widget.breaks,
-                        events: _events,
-                        elevatedEvent: _elevatedEvent,
-                        onEventTap: widget.onEventTap,
-                        eventBuilders: widget.eventBuilders,
-                      ),
-                    ),
+                    child: Stack(
+                      children: [
+                        EventAreaHourLinePainter(
+                          theme: theme.timeScaleTheme,
+                        ),
+                        ColoredBox(
+                          color: Colors.transparent, // Needs for hitTesting
+                          child: EventsLayout<T>(
+                            dayDate: dayDate,
+                            viewType: CalendarView.days,
+                            overlayKey: _overlayKey,
+                            layoutsKeys: DaysViewKeys.layouts,
+                            eventsKeys: DaysViewKeys.events,
+                            timelineTheme: widget.timelineTheme,
+                            breaks: widget.breaks,
+                            events: _events,
+                            elevatedEvent: _elevatedEvent,
+                            onEventTap: widget.onEventTap,
+                            eventBuilders: widget.eventBuilders,
+                          ),
+                        ),
+                      ],
+                    )
                   ),
                 ],
               ),

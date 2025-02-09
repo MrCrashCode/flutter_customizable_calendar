@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_customizable_calendar/flutter_customizable_calendar.dart';
 import 'package:flutter_customizable_calendar/src/ui/custom_widgets/all_days_events_list.dart';
+import 'package:flutter_customizable_calendar/src/ui/custom_widgets/event_area_hour_line_painter.dart';
 import 'package:flutter_customizable_calendar/src/ui/views/week_view/week_view_timeline_widget.dart';
 import 'package:flutter_customizable_calendar/src/utils/utils.dart';
 
@@ -268,7 +269,6 @@ class _WeekViewTimelinePageState<T extends FloatingCalendarEvent>
           WeekViewTimelineWidget(
             days: weekDays,
             scrollTo: (offset) {
-              if (offset == .0) return;
               _timelineController.jumpTo(offset);
             },
             initialScrollOffset:
@@ -401,20 +401,26 @@ class _WeekViewTimelinePageState<T extends FloatingCalendarEvent>
             bottom: widget.theme.padding.bottom,
           ),
           color: Colors.transparent, // Needs for hitTesting
-          child: EventsLayout<T>(
-            // key: ValueKey(dayDate),
-            dayDate: dayDate,
-            eventBuilders: widget.eventBuilders,
-            viewType: CalendarView.week,
-            overlayKey: widget.overlayKey,
-            layoutsKeys: widget.layoutKeys,
-            eventsKeys: widget.eventKeys,
-            timelineTheme: widget.theme,
-            breaks: widget.breaks,
-            events: widget.events,
-            elevatedEvent: widget.elevatedEvent,
-            onEventTap: widget.onEventTap,
-          ),
+          child: Stack(
+            children: [
+              EventAreaHourLinePainter(
+                theme: widget.theme.timeScaleTheme,
+              ),
+              EventsLayout<T>(
+                key: ValueKey(dayDate),
+                dayDate: dayDate,
+                eventBuilders: widget.eventBuilders,
+                viewType: CalendarView.week,
+                overlayKey: widget.overlayKey,
+                layoutsKeys: widget.layoutKeys,
+                eventsKeys: widget.eventKeys,
+                timelineTheme: widget.theme,
+                breaks: widget.breaks,
+                events: widget.events,
+                elevatedEvent: widget.elevatedEvent,
+                onEventTap: widget.onEventTap,
+              ),
+          ])
         ),
       ),
     );
